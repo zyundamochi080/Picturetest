@@ -3,10 +3,8 @@ package vitaty14.kg.picturetest
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -21,9 +19,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -32,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var path: String
-    var out: FileOutputStream? = null
     val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/KG")
     var file = (storageDir.getAbsolutePath()+"/*.jpg")
 
@@ -47,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //画像があるかどうかで分岐をかける
+        //TODO 画像があるかどうかで分岐をかける
             btnLaunchCamera.setOnClickListener {
 
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager)?.let {
@@ -57,12 +51,14 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         grantCameraPermission()
                     }
-                } ?: Toast.makeText(this, "カメラを扱うアプリがありません", Toast.LENGTH_LONG).show()
+                } ?: Toast.makeText(this, "no camera application", Toast.LENGTH_LONG).show()
             }
         if(file.isEmpty()) {
             Log.d("debug","file empty")
+            textView.text = "file empty"
         }else{
             Log.d("debug","file OK")
+            textView.text = "file OK"
         }
     }
 
