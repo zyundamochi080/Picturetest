@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         //画像があるかどうかで分岐をかける
-        if(file.isEmpty()) {
-            Log.d("debug","file empty")
             btnLaunchCamera.setOnClickListener {
 
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager)?.let {
@@ -61,6 +59,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 } ?: Toast.makeText(this, "カメラを扱うアプリがありません", Toast.LENGTH_LONG).show()
             }
+        if(file.isEmpty()) {
+            Log.d("debug","file empty")
         }else{
             Log.d("debug","file OK")
         }
