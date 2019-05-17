@@ -15,17 +15,39 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/textView" app:layout_constraintVertical_bias="0.396"/>
+            android:id="@+id/textView"
+            app:layout_constraintVertical_bias="0.382"/>
+    <TextView
+            android:text="Name:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textName"
+            app:layout_constraintStart_toEndOf="@+id/getName"
+            app:layout_constraintEnd_toStartOf="@+id/getName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/getName"
+            app:layout_constraintVertical_bias="0.923"/>
     <Button
-            android:text="Button"
+            android:text="Camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnLaunchCamera"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.167"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cameraImage"
-            app:layout_constraintBottom_toTopOf="parent"/>
+            app:layout_constraintBottom_toTopOf="@+id/cameraImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.408"/>
+    <Button
+            android:text="Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnTextSave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.835"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/cameraImage"
+            app:layout_constraintVertical_bias="0.408"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,5 +58,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/getName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textView"/>
 
 </android.support.constraint.ConstraintLayout>
