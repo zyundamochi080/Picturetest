@@ -22,7 +22,6 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 
-
 class MainActivity : AppCompatActivity() {
     companion object {
         const val CAMERA_REQUEST_CODE = 1
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/KG")
     val file = (storageDir.getAbsolutePath()+"/KG_test.jpg")
     val imageFileName = "KG_test.jpg"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,21 +47,18 @@ class MainActivity : AppCompatActivity() {
 
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager)?.let {
                     if (checkPermission()) {
-                        Toast.makeText(this, "カメラ起動", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "start camera application", Toast.LENGTH_LONG).show()
                         takePicture()
                     } else {
                         grantCameraPermission()
                     }
-                } ?: Toast.makeText(this, "no camera application", Toast.LENGTH_LONG).show()
+                } ?: Toast.makeText(this, "camera application not found.", Toast.LENGTH_LONG).show()
             }
 
         var checkfile = File(file)
         var fileExists = checkfile.exists()
 
         if(fileExists) {
-            Log.d("debug", "file_OK")
-            textView.text = "file_OK"
-
             path = storageDir.getAbsolutePath() + "/KG_test.jpg"
 
             try {
@@ -72,14 +67,19 @@ class MainActivity : AppCompatActivity() {
                 cameraImage.setImageBitmap(bitmap)
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
+                Log.d("debug","FileNotFoundException")
             }
+            Log.d("debug", "file_OK")
+            textView.text = "file_OK"
         }else{
             Log.d("debug","file_empty")
+            Toast.makeText(this, "file not found,please push button.", Toast.LENGTH_LONG).show()
             textView.text = "file_empty"
             }
         }
 
     private fun takePicture() {
+        Log.d("debug","takePicture")
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
             addCategory(Intent.CATEGORY_DEFAULT)
             putExtra(MediaStore.EXTRA_OUTPUT, createSaveFileUri())
@@ -101,6 +101,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.d("debug","onActivityResult")
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val contentValues = ContentValues().apply {
                 put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
@@ -116,6 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermission(): Boolean {
+        Log.d("debug","checkPermission")
         val cameraPermission = PackageManager.PERMISSION_GRANTED ==
                 ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.CAMERA)
 
@@ -153,6 +155,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             grantCameraPermission()
         }
-
+        Log.d("debug","onRequestPermissionsResult_end")
     }
 }
