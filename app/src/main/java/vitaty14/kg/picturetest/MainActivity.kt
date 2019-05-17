@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //TODO 画像があるかどうかで分岐をかける
             btnLaunchCamera.setOnClickListener {
 
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager)?.let {
@@ -63,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         var fileExists = checkfile.exists()
 
         if(fileExists) {
-            Log.d("debug", "file OK")
-            textView.text = "file OK"
+            Log.d("debug", "file_OK")
+            textView.text = "file_OK"
 
             path = storageDir.getAbsolutePath() + "/KG_test.jpg"
 
@@ -76,8 +74,8 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }else{
-            Log.d("debug","file empty")
-            textView.text = "file empty"
+            Log.d("debug","file_empty")
+            textView.text = "file_empty"
             }
         }
 
@@ -90,22 +88,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createSaveFileUri(): Uri {
-        // val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.JAPAN).format(Date())
-        // val imageFileName = "KG_" + timeStamp
 
         if (!storageDir.exists()) {
             storageDir.mkdir()
         }
-        /*
-        val file = File.createTempFile(
-            imageFileName, /* prefix */
-            ".jpg", /* suffix */
-            storageDir      /* directory */
-        )
-        */
 
         val file = File(storageDir,imageFileName)
-        val outputStream = FileOutputStream(file)
+        FileOutputStream(file)
 
         path = file.absolutePath
         return FileProvider.getUriForFile(this, "Picturetest.fileprovider", file)
@@ -136,13 +125,10 @@ class MainActivity : AppCompatActivity() {
         return cameraPermission && extraStoragePermission
     }
 
-
     private fun grantCameraPermission() =
         ActivityCompat.requestPermissions(this,
             arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
             CAMERA_PERMISSION_REQUEST_CODE)
-
-
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<out String>,
