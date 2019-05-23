@@ -66,14 +66,14 @@ class MainActivity : AppCompatActivity() {
                 Log.d("debug",memoryText)
 
                 val editor = dataSet.edit()
-                editor.putString("Input",memoryText)
+                editor.putString("Input_name",memoryText)
                 editor.apply()
-                Toast.makeText(this, "Saved!.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Saved!", Toast.LENGTH_LONG).show()
             }
 
         // 保存ボタンで保存された名前等を呼び出す
         if(memoryText == "NULL"){
-            val readName = dataSet.getString("Input","NoName")
+            val readName = dataSet.getString("Input_name","NoName")
             textName.text = "Name:${readName}"
             Log.d("debug","readName:${readName}")
         }
