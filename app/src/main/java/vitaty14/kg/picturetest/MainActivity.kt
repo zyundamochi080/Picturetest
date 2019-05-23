@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
             btnLaunchCamera.setOnClickListener {
-
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager)?.let {
                     if (checkPermission()) {
                         Toast.makeText(this, "start camera application", Toast.LENGTH_LONG).show()
@@ -55,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                 } ?: Toast.makeText(this, "camera application not found.", Toast.LENGTH_LONG).show()
             }
 
+        // 当該ファイルの有無を判定
         var checkfile = File(file)
         var fileExists = checkfile.exists()
 
@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity() {
             storageDir.mkdir()
         }
 
+        // カメラで写真撮影後、保存
         val file = File(storageDir,imageFileName)
         FileOutputStream(file)
 
@@ -110,6 +111,7 @@ class MainActivity : AppCompatActivity() {
             contentResolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
+            // カメラからの写真を保存後、呼び出してImageViewに表示
             val inputStream = FileInputStream(File(path))
             val bitmap = BitmapFactory.decodeStream(inputStream)
             cameraImage.setImageBitmap(bitmap)
