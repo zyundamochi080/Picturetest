@@ -17,6 +17,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
@@ -126,6 +128,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         Log.d("debug","onActivityResult")
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val contentValues = ContentValues().apply {
@@ -182,5 +185,22 @@ class MainActivity : AppCompatActivity() {
             grantCameraPermission()
         }
         Log.d("debug","onRequestPermissionsResult_end")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_open_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+            else -> {
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
