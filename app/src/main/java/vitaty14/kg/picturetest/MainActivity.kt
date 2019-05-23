@@ -3,7 +3,9 @@ package vitaty14.kg.picturetest
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -42,7 +44,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        val dataSet : SharedPreferences = getSharedPreferences("DataSet", Context.MODE_PRIVATE)
+        var memoryText = "NULL"
         super.onResume()
+
+            // カメラボタン
             btnLaunchCamera.setOnClickListener {
                 Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(packageManager)?.let {
                     if (checkPermission()) {
@@ -52,6 +58,16 @@ class MainActivity : AppCompatActivity() {
                         grantCameraPermission()
                     }
                 } ?: Toast.makeText(this, "camera application not found.", Toast.LENGTH_LONG).show()
+            }
+            // 保存ボタン
+            btnTextSave.setOnClickListener{
+                memoryText = getName.text.toString()
+                textName.text = ("Name:${memoryText}")
+                Log.d("debug",memoryText)
+
+                val editor = dataSet.edit()
+                editor.putString("Input",memoryText)
+                editor.apply()
             }
 
         // 当該ファイルの有無を判定
@@ -75,6 +91,13 @@ class MainActivity : AppCompatActivity() {
             Log.d("debug","file_empty")
             Toast.makeText(this, "file not found,please push button.", Toast.LENGTH_LONG).show()
             textView.text = "file_empty"
+            }
+
+        // 保存ボタンで保存された名前等を呼び出す
+        if(memoryText == "NULL"){
+            Log.d("debug","memoryText == NULL")
+            val readName = dataSet.getString("Input","NoName")
+            textName.text = "Name:${readName}"
             }
         }
 
