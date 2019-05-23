@@ -68,7 +68,15 @@ class MainActivity : AppCompatActivity() {
                 val editor = dataSet.edit()
                 editor.putString("Input",memoryText)
                 editor.apply()
+                Toast.makeText(this, "Saved!.", Toast.LENGTH_LONG).show()
             }
+
+        // 保存ボタンで保存された名前等を呼び出す
+        if(memoryText == "NULL"){
+            val readName = dataSet.getString("Input","NoName")
+            textName.text = "Name:${readName}"
+            Log.d("debug","readName:${readName}")
+        }
 
         // 当該ファイルの有無を判定
         var checkfile = File(file)
@@ -91,13 +99,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("debug","file_empty")
             Toast.makeText(this, "file not found,please push button.", Toast.LENGTH_LONG).show()
             textView.text = "file_empty"
-            }
-
-        // 保存ボタンで保存された名前等を呼び出す
-        if(memoryText == "NULL"){
-            Log.d("debug","memoryText == NULL")
-            val readName = dataSet.getString("Input","NoName")
-            textName.text = "Name:${readName}"
             }
         }
 
