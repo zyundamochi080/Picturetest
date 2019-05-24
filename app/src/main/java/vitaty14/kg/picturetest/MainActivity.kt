@@ -20,6 +20,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileInputStream
@@ -47,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         val dataSet : SharedPreferences = getSharedPreferences("DataSet", Context.MODE_PRIVATE)
+        val sharedPreferences : SharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this);
+        val testName = sharedPreferences.getString("signature","no")
+        Log.d("debug",testName)
+
         var memoryText = "NULL"
         super.onResume()
 
